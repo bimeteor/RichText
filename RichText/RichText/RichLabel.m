@@ -8,6 +8,13 @@
 
 #import "RichLabel.h"
 #import "QCTextStorage.h"
+#import "GIFView.h"
+
+@interface RichLabel()<NSTextStorageDelegate>
+{
+    NSMutableArray *_GIFViews;
+}
+@end
 
 @implementation RichLabel
 
@@ -21,10 +28,12 @@
     self = [super initWithFrame:frame textContainer:con];
     if (self)
     {
+        store.delegate = self;
         self.textContainerInset = UIEdgeInsetsZero;
         self.textContainer.lineFragmentPadding = 0;
         super.font=[UIFont systemFontOfSize:17];
         super.textColor=[UIColor blackColor];
+        _GIFViews=[NSMutableArray new];
     }
     return self;
 }
@@ -38,6 +47,40 @@
 {
     NSAttributedString *str=[self attributedStringFromString:text];
     [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:str];
+    /*
+    [self.textStorage enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.textStorage.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+        if (value)
+        {
+            CGRect rect = [self.layoutManager boundingRectForGlyphRange:range inTextContainer:self.textContainer];
+            rect = CGRectMake(rect.origin.x, rect.origin.y-self.font.descender, rect.size.width, rect.size.height);
+            long index = [_GIFViews indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+                if (![obj superview])
+                {
+                    *stop = YES;
+                    return YES;
+                }else
+                {
+                    return NO;
+                }
+            }];
+            GIFView *view;
+            if (index!=NSNotFound)
+            {
+                view = _GIFViews[index];
+            }else
+            {
+                view = [GIFView new];
+                [_GIFViews addObject:view];
+            }
+            [self addSubview:view];
+            view.frame = rect;
+            //view.backgroundColor=[UIColor blueColor];
+            NSString *path=[[NSBundle mainBundle] pathForResource:[[(QCTextAttachment*)value tag] stringByAppendingString:@"@2x"] ofType:@"gif"];
+            NSData *data=[NSData dataWithContentsOfFile:path];
+            view.GIFData=data;
+            [view startAnimation];
+        }
+    }];*/
 }
 
 - (void)setTextColor:(UIColor *)textColor
@@ -87,7 +130,8 @@
                     NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
                     att.image=[UIImage imageNamed:sub];
                     att.bounds=CGRectMake(0, 0, size.width, size.height);//TODO:frank
-                    [str appendAttributedString:[NSAttributedString attributedStringWithAttachment:att]];
+                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%uA", NSAttachmentCharacter] attributes:@{NSAttachmentAttributeName:att, @"tag":sub}];
+                    [str appendAttributedString:atts];
                     index+=4;
                 }else
                 {

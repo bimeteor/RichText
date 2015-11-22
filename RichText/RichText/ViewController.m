@@ -41,7 +41,7 @@ UIBezierPath *path_from_str(NSString *str)
     [self.view addSubview:view];
     view.backgroundColor = [UIColor redColor];
     //view.textColor=[UIColor blueColor];
-    view.text=@"a/001b";
+    view.text=@"a/001b/009asdf/004asdf";
 }
 
 @end

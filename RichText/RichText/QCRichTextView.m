@@ -156,7 +156,6 @@
             [view startAnimation];
         }
     }];
-
 }
 
 @end
