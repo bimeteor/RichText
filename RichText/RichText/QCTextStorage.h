@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *gifs;
+extern NSString *icons;
+
 @interface QCTextStorage : NSTextStorage
 - (float)heightWithWidth:(float)width font:(UIFont*)font;
 @end

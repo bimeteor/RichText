@@ -10,7 +10,7 @@
 #import "QCTextAttachment.h"
 
 NSString *gifs=@"002,005,006,010,011,014,019,020,021,026,038,044,097,098,099";
-
+NSString *icons=@"001,002,003,004,005,006,007,008,009,010";
 
 @interface QCTextStorage()
 {
