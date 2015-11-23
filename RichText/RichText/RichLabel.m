@@ -7,8 +7,13 @@
 //
 
 #import "RichLabel.h"
-#import "QCTextStorage.h"
 #import "GIFView.h"
+
+NSString *gifs=@"002,005,006,010,011,014,019,020,021,026,038,044,097,098,099";
+NSString *icons=@"001,002,003,004,005,006,007,008,009,010";
+
+NSSet *__icons;
+NSSet *__gifs;
 
 @interface RichLabel()<NSTextStorageDelegate>
 {
@@ -34,6 +39,12 @@
         super.font=[UIFont systemFontOfSize:17];
         super.textColor=[UIColor blackColor];
         _GIFViews=[NSMutableArray new];
+
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            __icons=[NSSet setWithArray:[icons componentsSeparatedByString:@","]];
+            __gifs=[NSSet setWithArray:[gifs componentsSeparatedByString:@","]];
+        });
     }
     return self;
 }
@@ -112,8 +123,6 @@
 
 - (NSAttributedString*)attributedStringFromString:(NSString*)string
 {
-    //TODO:frank 目前比较用字符串匹配
-    NSArray *_icons=[icons componentsSeparatedByString:@","];//TODO:frank
     NSMutableAttributedString *str = [NSMutableAttributedString new];
     long index = 0;
     while (index<string.length)
@@ -124,13 +133,13 @@
             if (index+3<string.length)
             {
                 NSString *sub=[string substringWithRange:NSMakeRange(index+1, 3)];
-                if ([_icons containsObject:sub])
+                if ([__icons containsObject:sub])
                 {
                     CGSize size = CGSizeMake(self.font.pointSize, self.font.pointSize);
                     NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
                     att.image=[UIImage imageNamed:sub];
                     att.bounds=CGRectMake(0, 0, size.width, size.height);//TODO:frank
-                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%uA", NSAttachmentCharacter] attributes:@{NSAttachmentAttributeName:att, @"tag":sub}];
+                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%CA", (unichar)NSAttachmentCharacter] attributes:@{NSAttachmentAttributeName:att, @"tag":sub}];
                     [str appendAttributedString:atts];
                     index+=4;
                 }else

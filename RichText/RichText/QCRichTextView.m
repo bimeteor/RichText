@@ -11,8 +11,6 @@
  */
 #import "QCRichTextView.h"
 #import "GIFView.h"
-#import "QCTextAttachment.h"
-#import "QCTextStorage.h"
 
 @interface QCRichTextView()<NSTextStorageDelegate>
 {
@@ -74,7 +72,7 @@
 
 - (void)setText:(NSString *)text
 {
-    [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:text.attributedString];
+    //[self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:text.attributedString];
     self.textColor=self.textColor;
     self.font=self.font;
     self.backgroundColor=self.backgroundColor;
@@ -127,7 +125,6 @@
         {
             CGRect rect = [self.layoutManager boundingRectForGlyphRange:range inTextContainer:self.textContainer];
             rect = CGRectMake(rect.origin.x, rect.origin.y-self.font.descender, rect.size.width, rect.size.height);
-            NSLog(@" %@ %@",[NSValue valueWithCGRect:rect], [(QCTextAttachment*)value tag]);
             long index = [_GIFViews indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
                 if (![obj superview])
                 {
@@ -150,7 +147,7 @@
             [self addSubview:view];
             view.frame = rect;
             //view.backgroundColor=[UIColor blueColor];
-            NSString *path=[[NSBundle mainBundle] pathForResource:[[(QCTextAttachment*)value tag] stringByAppendingString:@"@2x"] ofType:@"gif"];
+            NSString *path=nil;//[[NSBundle mainBundle] pathForResource:[[(QCTextAttachment*)value tag] stringByAppendingString:@"@2x"] ofType:@"gif"];
             NSData *data=[NSData dataWithContentsOfFile:path];
             view.GIFData=data;
             [view startAnimation];
