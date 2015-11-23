@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B1C928C1BF2DAB300A20ECB /* QCRichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C928B1BF2DAB300A20ECB /* QCRichTextView.m */; };
+		4B1C928C1BF2DAB300A20ECB /* RichTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C928B1BF2DAB300A20ECB /* RichTextView.m */; };
 		4B6590FF1BF03D7000D9BD64 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6590FE1BF03D7000D9BD64 /* main.m */; };
 		4B6591021BF03D7000D9BD64 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6591011BF03D7000D9BD64 /* AppDelegate.m */; };
 		4B6591051BF03D7000D9BD64 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6591041BF03D7000D9BD64 /* ViewController.m */; };
@@ -46,8 +46,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4B1C928A1BF2DAB300A20ECB /* QCRichTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCRichTextView.h; sourceTree = "<group>"; };
-		4B1C928B1BF2DAB300A20ECB /* QCRichTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCRichTextView.m; sourceTree = "<group>"; };
+		4B1C928A1BF2DAB300A20ECB /* RichTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextView.h; sourceTree = "<group>"; };
+		4B1C928B1BF2DAB300A20ECB /* RichTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextView.m; sourceTree = "<group>"; };
 		4B6590FA1BF03D7000D9BD64 /* RichText.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RichText.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B6590FE1BF03D7000D9BD64 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B6591001BF03D7000D9BD64 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -137,8 +137,8 @@
 				4B6591041BF03D7000D9BD64 /* ViewController.m */,
 				D6CE6B5B1C02038E005DB3A7 /* RichLabel.h */,
 				D6CE6B5C1C02038E005DB3A7 /* RichLabel.m */,
-				4B1C928A1BF2DAB300A20ECB /* QCRichTextView.h */,
-				4B1C928B1BF2DAB300A20ECB /* QCRichTextView.m */,
+				4B1C928A1BF2DAB300A20ECB /* RichTextView.h */,
+				4B1C928B1BF2DAB300A20ECB /* RichTextView.m */,
 				4B6591061BF03D7000D9BD64 /* Main.storyboard */,
 				4B6591091BF03D7000D9BD64 /* Assets.xcassets */,
 				4B65910B1BF03D7000D9BD64 /* LaunchScreen.storyboard */,
@@ -298,7 +298,7 @@
 				D6CE6B5D1C02038E005DB3A7 /* RichLabel.m in Sources */,
 				4BB109121BF43E0B00759F00 /* PathDrawingView.m in Sources */,
 				4B6591501BF0BAE100D9BD64 /* GIFView.m in Sources */,
-				4B1C928C1BF2DAB300A20ECB /* QCRichTextView.m in Sources */,
+				4B1C928C1BF2DAB300A20ECB /* RichTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

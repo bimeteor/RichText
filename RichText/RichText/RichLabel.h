@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSSet *__icons;
+extern NSSet *__gifs;
+
 @interface RichLabel : UITextView
 
 @end

@@ -8,11 +8,12 @@
 
 #import "ViewController.h"
 #import "UIView+NSLayoutExtension.h"
-#import "QCRichTextView.h"
+#import "RichTextView.h"
 #import "PathDrawingView.h"
 #import "RichLabel.h"
 
-NSString *plain = @"你们还/002好吗啊史/021khb我是frank/014hbjk好想你们啊/044一起吃饭吧/006/099jkhbjkh大家觉得怎么样";
+//NSString *plain = @"你们还/002好吗啊史/021khb我是frank/014hbjk好想你们啊/044一起吃饭吧/006/099jkhbjkh大家觉得怎么样";
+NSString *plain = @"g/001j/009a你还好台球f/004asdf";
 
 @interface ViewController ()
 {
@@ -37,11 +38,12 @@ UIBezierPath *path_from_str(NSString *str)
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    RichLabel *view = [[RichLabel alloc] initWithFrame:CGRectMake(90, 90, 200, 80)];
+    RichTextView *view = [[RichTextView alloc] initWithFrame:CGRectMake(90, 90, 200, 80)];
     [self.view addSubview:view];
     view.backgroundColor = [UIColor redColor];
     //view.textColor=[UIColor blueColor];
-    view.text=@"a/001b/009asdf/004asdf";
+    //view.text=@"g/001j/009a你还好台球f/004asdf";
+    view.text=plain;
 }
 
 @end

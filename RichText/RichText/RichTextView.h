@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QCRichTextView : UITextView
+@interface RichTextView : UITextView
 
 @end

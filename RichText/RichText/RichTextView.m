@@ -1,27 +1,23 @@
 //
-//  RichLabel.m
+//  QCRichTextView.m
 //  RichText
 //
-//  Created by WG on 15/11/22.
+//  Created by Laughing on 15/11/11.
 //  Copyright © 2015年 frank. All rights reserved.
 //
-
+/*
+ 1.copy to here,plain->rich
+ 2.copy from here,rich->plain
+ */
+#import "RichTextView.h"
 #import "RichLabel.h"
-#import "GIFView.h"
 
-NSString *gifs=@"002,005,006,010,011,014,019,020,021,026,038,044,097,098,099";
-NSString *icons=@"001,002,003,004,005,006,007,008,009,010";
-
-NSSet *__icons;
-NSSet *__gifs;
-
-@interface RichLabel()<NSTextStorageDelegate>
+@interface RichTextView()<NSTextStorageDelegate>
 {
-    NSMutableArray *_GIFViews;
 }
 @end
 
-@implementation RichLabel
+@implementation RichTextView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -38,18 +34,43 @@ NSSet *__gifs;
         self.textContainer.lineFragmentPadding = 0;
         super.font=[UIFont systemFontOfSize:17];
         super.textColor=[UIColor blackColor];
-        super.editable = NO;
-        _GIFViews=[NSMutableArray new];
-
+        
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            __icons=[NSSet setWithArray:[icons componentsSeparatedByString:@","]];
-            __gifs=[NSSet setWithArray:[gifs componentsSeparatedByString:@","]];
+            [RichLabel new];
         });
     }
     return self;
 }
 
+/*
+- (void)copy:(nullable id)sender {
+    NSRange range = self.selectedRange;
+    NSString *s = [self encodedStringInRange:range];
+    [UIPasteboard generalPasteboard].string = s;
+}
+
+- (void)cut:(nullable id)sender {
+    NSRange range = self.selectedRange;
+    NSRange composedRange = [self composedRangeOfRange:range];
+    NSString *s = [self encodedStringInComposedRange:composedRange];
+    [UIPasteboard generalPasteboard].string = s;
+    
+    [self.textStorage deleteCharactersInRange:composedRange];
+}
+
+- (void)paste:(id)sender {
+    NSRange range = self.selectedRange;
+    NSRange composedRange = [self composedRangeOfRange:range];
+    
+    NSString *s = [UIPasteboard generalPasteboard].string;
+    NSAttributedString *as = [self convertFromEncodedString:s];
+    [self.textStorage replaceCharactersInRange:composedRange withAttributedString:as];
+    self.selectedRange = NSMakeRange(composedRange.location + as.length, 0);
+    
+    [self setNeedsLayout];
+}
+*/
 - (NSString*)text
 {
     return self.textStorage.string;//TODO:frank
@@ -59,39 +80,6 @@ NSSet *__gifs;
 {
     NSAttributedString *str=[self attributedStringFromString:text];
     [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:str];
-    [_GIFViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self.textStorage enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.textStorage.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        if (value)
-        {
-            CGRect rect = [self.layoutManager boundingRectForGlyphRange:range inTextContainer:self.textContainer];
-            long index = [_GIFViews indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-                if (![obj superview])
-                {
-                    *stop = YES;
-                    return YES;
-                }else
-                {
-                    return NO;
-                }
-            }];
-            GIFView *view;
-            if (index!=NSNotFound)
-            {
-                view = _GIFViews[index];
-            }else
-            {
-                view = [GIFView new];
-                [_GIFViews addObject:view];
-            }
-            [self addSubview:view];
-            view.frame = rect;
-            NSString *tag=[self.textStorage attribute:@"tag" atIndex:range.location effectiveRange:NULL];
-            NSString *path=[[NSBundle mainBundle] pathForResource:[tag stringByAppendingString:@"@2x"] ofType:@"gif"];
-            NSData *data=[NSData dataWithContentsOfFile:path];
-            view.GIFData=data;
-            [view startAnimation];
-        }
-    }];
 }
 
 - (void)setTextColor:(UIColor *)textColor
@@ -121,9 +109,10 @@ NSSet *__gifs;
     [self.textStorage endEditing];
 }
 
-- (void)setEditable:(BOOL)editable
+- (NSString*)stringFromAttributedString:(NSAttributedString*)attributedString
 {
-    
+    NSMutableString *str=[NSMutableString new];
+    return nil;
 }
 
 - (NSAttributedString*)attributedStringFromString:(NSString*)string
@@ -139,10 +128,10 @@ NSSet *__gifs;
             if (index+3<string.length)
             {
                 NSString *sub=[string substringWithRange:NSMakeRange(index+1, 3)];
-                if ([__gifs containsObject:sub])
+                if ([__icons containsObject:sub])
                 {
                     NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
-                    //att.image=[UIImage imageNamed:sub];
+                    att.image=[UIImage imageNamed:sub];
                     att.bounds=CGRectMake(0, self.font.descender, self.font.ascender-self.font.descender, self.font.ascender-self.font.descender);
                     NSAttributedString *atts=[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%CA", (unichar)NSAttachmentCharacter] attributes:@{NSAttachmentAttributeName:att, @"tag":sub}];
                     [str appendAttributedString:atts];
@@ -168,28 +157,15 @@ NSSet *__gifs;
     
     return str;
 }
-/*
- - (float)heightWithWidth:(float)width font:(UIFont*)font
- {
- NSMutableAttributedString *att=[[NSMutableAttributedString alloc] initWithAttributedString:self];
- [att enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
- if (value)
- {
- [value setBounds:CGRectMake(0, 0, font.pointSize, font.pointSize)];
- }
- }];
- [att removeAttribute:NSFontAttributeName range:NSMakeRange(0, att.length)];
- [att addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, att.length)];
- CGRect rect = [att boundingRectWithSize:CGSizeMake(width, HUGE_VALF) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
- return rect.size.height;
- }
 
- */
-/*
-- (void)copy:(nullable id)sender {
-    NSRange range = self.selectedRange;
-    NSString *s = [self encodedStringInRange:range];
-    [UIPasteboard generalPasteboard].string = s;
+- (void)textStorage:(NSTextStorage *)textStorage willProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta
+{
+    if ((editedMask & NSTextStorageEditedCharacters)!=0)
+    {
+        NSString *plain=[textStorage attributedSubstringFromRange:editedRange].string;
+        NSAttributedString *rich=[self attributedStringFromString:plain];
+        [textStorage replaceCharactersInRange:editedRange withAttributedString:rich];
+    }
 }
-*/
+
 @end
