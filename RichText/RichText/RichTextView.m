@@ -21,11 +21,12 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    NSTextContainer *con = [NSTextContainer new];
     NSLayoutManager *layout = [NSLayoutManager new];
-    [layout addTextContainer:con];
     NSTextStorage *store=[NSTextStorage new];
     [store addLayoutManager:layout];
+    NSTextContainer *con = [NSTextContainer new];
+    con.widthTracksTextView = YES;
+    [layout addTextContainer:con];
     self = [super initWithFrame:frame textContainer:con];
     if (self)
     {
@@ -43,43 +44,50 @@
     return self;
 }
 
-/*
-- (void)copy:(nullable id)sender {
-    NSRange range = self.selectedRange;
-    NSString *s = [self encodedStringInRange:range];
-    [UIPasteboard generalPasteboard].string = s;
+- (void)copy:(nullable id)sender
+{
+    [UIPasteboard generalPasteboard].string = [self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:self.selectedRange]];
 }
 
-- (void)cut:(nullable id)sender {
-    NSRange range = self.selectedRange;
-    NSRange composedRange = [self composedRangeOfRange:range];
-    NSString *s = [self encodedStringInComposedRange:composedRange];
-    [UIPasteboard generalPasteboard].string = s;
-    
-    [self.textStorage deleteCharactersInRange:composedRange];
+- (void)cut:(nullable id)sender
+{
+    [UIPasteboard generalPasteboard].string = [self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:self.selectedRange]];
+    [super cut:sender];
 }
 
-- (void)paste:(id)sender {
-    NSRange range = self.selectedRange;
-    NSRange composedRange = [self composedRangeOfRange:range];
-    
-    NSString *s = [UIPasteboard generalPasteboard].string;
-    NSAttributedString *as = [self convertFromEncodedString:s];
-    [self.textStorage replaceCharactersInRange:composedRange withAttributedString:as];
-    self.selectedRange = NSMakeRange(composedRange.location + as.length, 0);
-    
-    [self setNeedsLayout];
+- (void)paste:(id)sender
+{
+    NSMutableString *str=[NSMutableString new];
+    long left=0;
+    long right=self.textStorage.length;
+    if (self.selectedRange.location>3)
+    {
+        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(self.selectedRange.location-3, 3)]]];
+        left=self.selectedRange.location-3;
+    }else if (self.selectedRange.location>0)
+    {
+        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(0, self.selectedRange.location)]]];
+    }
+    [str appendString:[UIPasteboard generalPasteboard].string];
+    if (NSMaxRange(self.selectedRange)<self.textStorage.length-3)
+    {
+        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(NSMaxRange(self.selectedRange), 3)]]];
+        right=NSMaxRange(self.selectedRange)+3;
+    }else
+    {
+        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(NSMaxRange(self.selectedRange), self.textStorage.length-self.selectedRange.location)]]];
+    }
+    [self.textStorage replaceCharactersInRange:NSMakeRange(left, right-left) withAttributedString:[self attributedStringFromString:str]];
 }
-*/
+
 - (NSString*)text
 {
-    return self.textStorage.string;//TODO:frank
+    return [self stringFromAttributedString:self.textStorage];
 }
 
 - (void)setText:(NSString *)text
 {
-    NSAttributedString *str=[self attributedStringFromString:text];
-    [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:str];
+    [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:text]];
 }
 
 - (void)setTextColor:(UIColor *)textColor
@@ -112,7 +120,22 @@
 - (NSString*)stringFromAttributedString:(NSAttributedString*)attributedString
 {
     NSMutableString *str=[NSMutableString new];
-    return nil;
+    long index=0;
+    NSAttributedString *ch;
+    while (index<attributedString.length)
+    {
+        ch=[attributedString attributedSubstringFromRange:NSMakeRange(index, 1)];
+        NSString *tag=[ch attribute:AttachmentTagAttributeName atIndex:0 effectiveRange:NULL];
+        if ([ch.string isEqualToString:AttachmentCharacterString] && tag)
+        {
+            [str appendFormat:@"/%@", tag];
+        }else
+        {
+            [str appendString:ch.string];
+        }
+        ++index;
+    }
+    return str;
 }
 
 - (NSAttributedString*)attributedStringFromString:(NSString*)string
@@ -133,7 +156,7 @@
                     NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
                     att.image=[UIImage imageNamed:sub];
                     att.bounds=CGRectMake(0, self.font.descender, self.font.ascender-self.font.descender, self.font.ascender-self.font.descender);
-                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%CA", (unichar)NSAttachmentCharacter] attributes:@{NSAttachmentAttributeName:att, @"tag":sub}];
+                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:AttachmentCharacterString attributes:@{NSAttachmentAttributeName:att, AttachmentTagAttributeName:sub}];
                     [str appendAttributedString:atts];
                     index+=4;
                 }else
@@ -162,9 +185,12 @@
 {
     if ((editedMask & NSTextStorageEditedCharacters)!=0)
     {
-        NSString *plain=[textStorage attributedSubstringFromRange:editedRange].string;
+        long right=MIN(NSMaxRange(editedRange)+3, textStorage.length);
+        long left=MAX((long)editedRange.location-3, 0);
+        NSRange range=NSMakeRange(left, right-left);
+        NSString *plain=[self stringFromAttributedString:[textStorage attributedSubstringFromRange:range]];
         NSAttributedString *rich=[self attributedStringFromString:plain];
-        [textStorage replaceCharactersInRange:editedRange withAttributedString:rich];
+        [textStorage replaceCharactersInRange:range withAttributedString:rich];
     }
 }
 

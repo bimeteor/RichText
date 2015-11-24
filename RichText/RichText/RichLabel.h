@@ -10,6 +10,8 @@
 
 extern NSSet *__icons;
 extern NSSet *__gifs;
+extern NSString *AttachmentCharacterString;
+extern NSString *AttachmentTagAttributeName;
 
 @interface RichLabel : UITextView
 
