@@ -114,6 +114,18 @@
     [self.textStorage beginEditing];
     [self.textStorage removeAttribute:NSFontAttributeName range:NSMakeRange(0, self.textStorage.length)];
     [self.textStorage addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, self.textStorage.length)];
+    
+    long index=0;
+    while (index<self.textStorage.length)
+    {
+        NSAttributedString *ch=[self.textStorage attributedSubstringFromRange:NSMakeRange(index, 1)];
+        if ([ch.string isEqualToString:AttachmentCharacterString])
+        {
+            NSTextAttachment *att=[ch attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
+            att.bounds=CGRectMake(0, font.descender, font.ascender-font.descender, font.ascender-font.descender);
+        }
+        ++index;
+    }
     [self.textStorage endEditing];
 }
 

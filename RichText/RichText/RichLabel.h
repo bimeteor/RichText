@@ -16,3 +16,8 @@ extern NSString *AttachmentTagAttributeName;
 @interface RichLabel : UITextView
 
 @end
+
+
+@interface NSAttributedString(Height)
+
+@end

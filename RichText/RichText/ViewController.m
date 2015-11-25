@@ -31,7 +31,13 @@ NSString *plain = @"g/001j/009a你还好台球f/004asdfg/001j/009a你还好台�
     view.backgroundColor = [UIColor yellowColor];
     view.text=plain;
     NSLog(@"%@", plain);
-    NSLog(@"%@", view.text);
+    
+    //NSData *data=[NSKeyedArchiver archivedDataWithRootObject:view.textStorage];
+    //NSString *path=[NSTemporaryDirectory() stringByAppendingString:@"/str.data"];
+    //[data writeToFile:path atomically:YES];
+    //view.attributedText=[NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:path]];
+    //view.attributedText=[NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:path]];
+    
 }
 
 @end

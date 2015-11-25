@@ -200,6 +200,18 @@ NSString *AttachmentCharacterString;
     [self.textStorage beginEditing];
     [self.textStorage removeAttribute:NSFontAttributeName range:NSMakeRange(0, self.textStorage.length)];
     [self.textStorage addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, self.textStorage.length)];
+    
+    long index=0;
+    while (index<self.textStorage.length)
+    {
+        NSAttributedString *ch=[self.textStorage attributedSubstringFromRange:NSMakeRange(index, 1)];
+        if ([ch.string isEqualToString:AttachmentCharacterString])
+        {
+            NSTextAttachment *att=[ch attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
+            att.bounds=CGRectMake(0, font.descender, font.ascender-font.descender, font.ascender-font.descender);
+        }
+        ++index;
+    }
     [self.textStorage endEditing];
 }
 
@@ -213,28 +225,30 @@ NSString *AttachmentCharacterString;
     
 }
 
-/*
- - (float)heightWithWidth:(float)width font:(UIFont*)font
- {
- NSMutableAttributedString *att=[[NSMutableAttributedString alloc] initWithAttributedString:self];
- [att enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
- if (value)
- {
- [value setBounds:CGRectMake(0, 0, font.pointSize, font.pointSize)];
- }
- }];
- [att removeAttribute:NSFontAttributeName range:NSMakeRange(0, att.length)];
- [att addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, att.length)];
- CGRect rect = [att boundingRectWithSize:CGSizeMake(width, HUGE_VALF) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
- return rect.size.height;
- }
+@end
 
- */
-/*
-- (void)copy:(nullable id)sender {
-    NSRange range = self.selectedRange;
-    NSString *s = [self encodedStringInRange:range];
-    [UIPasteboard generalPasteboard].string = s;
+
+@implementation NSAttributedString(Height)
+
+- (float)heightForWidth:(float)width font:(UIFont*)font
+{
+    NSMutableAttributedString *att=[[NSMutableAttributedString alloc] initWithAttributedString:self];
+    [att removeAttribute:NSFontAttributeName range:NSMakeRange(0, att.length)];
+    [att addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, att.length)];
+    long index=0;
+    while (index<att.length)
+    {
+        NSAttributedString *ch=[att attributedSubstringFromRange:NSMakeRange(index, 1)];
+        if ([ch.string isEqualToString:AttachmentCharacterString])
+        {
+            NSTextAttachment *att=[ch attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
+            att.bounds=CGRectMake(0, font.descender, font.ascender-font.descender, font.ascender-font.descender);
+        }
+        ++index;
+    }
+    
+    CGRect rect = [att boundingRectWithSize:CGSizeMake(width, HUGE_VALF) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
+    return rect.size.height;
 }
-*/
+
 @end
