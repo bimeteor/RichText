@@ -12,8 +12,8 @@
 #import "PathDrawingView.h"
 #import "RichLabel.h"
 
-//NSString *plain = @"你们还/002好吗啊史/021khb我是frank/014hbjk好想你们啊/044一起吃饭吧/006/099jkhbjkh大家觉得怎么样";
-NSString *plain = @"g/001j/009a你还好台球f/004asdfg/001j/009a你还好台球f/004asdf";
+NSString *plain = @"你们还/002好吗啊史/021khb我是frank/014hbjk好想你们啊/044一起吃饭吧/006/099jkhbjkh大家觉得怎么样";
+//NSString *plain = @"g/001j/009a你还好台球f/004asdfg/001j/009a你还好台球f/004asdf";
 
 @interface ViewController ()
 {
@@ -26,7 +26,7 @@ NSString *plain = @"g/001j/009a你还好台球f/004asdfg/001j/009a你还好台�
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    RichTextView *view = [[RichTextView alloc] initWithFrame:CGRectMake(90, 90, 200, 80)];
+    RichLabel *view = [[RichLabel alloc] initWithFrame:CGRectMake(90, 90, 200, 80)];
     [self.view addSubview:view];
     view.backgroundColor = [UIColor yellowColor];
     view.text=plain;

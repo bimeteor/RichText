@@ -6,13 +6,8 @@
 //  Copyright © 2015年 frank. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "RichTextViewBase.h"
 
-extern NSSet *__icons;
-extern NSSet *__gifs;
-extern NSString *AttachmentCharacterString;
-extern NSString *AttachmentTagAttributeName;
-
-@interface RichLabel : UITextView
+@interface RichLabel : RichTextViewBase
 
 @end

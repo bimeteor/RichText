@@ -6,8 +6,8 @@
 //  Copyright © 2015年 frank. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "RichTextViewBase.h"
 
-@interface RichTextView : UITextView
+@interface RichTextView : RichTextViewBase
 
 @end

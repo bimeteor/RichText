@@ -5,12 +5,8 @@
 //  Created by Laughing on 15/11/11.
 //  Copyright © 2015年 frank. All rights reserved.
 //
-/*
- 1.copy to here,plain->rich
- 2.copy from here,rich->plain
- */
+
 #import "RichTextView.h"
-#import "RichLabel.h"
 
 @interface RichTextView()<NSTextStorageDelegate>
 {
@@ -21,25 +17,10 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    NSLayoutManager *layout = [NSLayoutManager new];
-    NSTextStorage *store=[NSTextStorage new];
-    [store addLayoutManager:layout];
-    NSTextContainer *con = [NSTextContainer new];
-    con.widthTracksTextView = YES;
-    [layout addTextContainer:con];
-    self = [super initWithFrame:frame textContainer:con];
+    self = [super initWithFrame:frame];
     if (self)
     {
-        store.delegate = self;
-        self.textContainerInset = UIEdgeInsetsZero;
-        self.textContainer.lineFragmentPadding = 0;
-        super.font=[UIFont systemFontOfSize:17];
-        super.textColor=[UIColor blackColor];
-        
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [RichLabel new];
-        });
+        self.textStorage.delegate=self;
     }
     return self;
 }
@@ -80,64 +61,6 @@
     [self.textStorage replaceCharactersInRange:NSMakeRange(left, right-left) withAttributedString:[self attributedStringFromString:str]];
 }
 
-- (NSString*)text
-{
-    return [self stringFromAttributedString:self.textStorage];
-}
-
-- (void)setText:(NSString *)text
-{
-    [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:text]];
-}
-
-- (void)setTextColor:(UIColor *)textColor
-{
-    super.textColor=textColor;
-    [self.textStorage beginEditing];
-    [self.textStorage removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, self.textStorage.length)];
-    [self.textStorage addAttribute:NSForegroundColorAttributeName value:textColor range:NSMakeRange(0, self.textStorage.length)];
-    [self.textStorage endEditing];
-}
-
-- (void)setBackgroundColor:(UIColor *)backgroundColor
-{
-    super.backgroundColor=backgroundColor;
-    [self.textStorage beginEditing];
-    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:NSMakeRange(0, self.textStorage.length)];
-    [self.textStorage addAttribute:NSBackgroundColorAttributeName value:backgroundColor range:NSMakeRange(0, self.textStorage.length)];
-    [self.textStorage endEditing];
-}
-
-- (void)setFont:(UIFont *)font
-{
-    super.font=font;
-    [self.textStorage beginEditing];
-    [self.textStorage removeAttribute:NSFontAttributeName range:NSMakeRange(0, self.textStorage.length)];
-    [self.textStorage addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, self.textStorage.length)];
-    [self.textStorage endEditing];
-}
-
-- (NSString*)stringFromAttributedString:(NSAttributedString*)attributedString
-{
-    NSMutableString *str=[NSMutableString new];
-    long index=0;
-    NSAttributedString *ch;
-    while (index<attributedString.length)
-    {
-        ch=[attributedString attributedSubstringFromRange:NSMakeRange(index, 1)];
-        NSString *tag=[ch attribute:AttachmentTagAttributeName atIndex:0 effectiveRange:NULL];
-        if ([ch.string isEqualToString:AttachmentCharacterString] && tag)
-        {
-            [str appendFormat:@"/%@", tag];
-        }else
-        {
-            [str appendString:ch.string];
-        }
-        ++index;
-    }
-    return str;
-}
-
 - (NSAttributedString*)attributedStringFromString:(NSString*)string
 {
     NSMutableAttributedString *str = [NSMutableAttributedString new];
@@ -151,7 +74,7 @@
             if (index+3<string.length)
             {
                 NSString *sub=[string substringWithRange:NSMakeRange(index+1, 3)];
-                if ([__icons containsObject:sub])
+                if ([__pics containsObject:sub])
                 {
                     NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
                     att.image=[UIImage imageNamed:sub];
