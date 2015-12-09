@@ -28,6 +28,7 @@
         _textColor=[UIColor blackColor];
         super.editable = NO;
         _GIFViews=[NSMutableArray new];
+        _richSymbols=__gifs;
     }
     return self;
 }
@@ -77,49 +78,6 @@
     }
 }
 
-- (NSAttributedString*)attributedStringFromString:(NSString*)string
-{
-    NSMutableAttributedString *str = [NSMutableAttributedString new];
-    long index = 0;
-    NSString *ch;
-    while (index<string.length)
-    {
-        ch=[string substringWithRange:NSMakeRange(index, 1)];
-        if ([ch isEqualToString:@"/"])
-        {
-            if (index+3<string.length)
-            {
-                NSString *sub=[string substringWithRange:NSMakeRange(index+1, 3)];
-                if ([__gifs containsObject:sub])
-                {
-                    NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
-                    att.image=[UIImage imageNamed:sub];
-                    att.bounds=CGRectMake(0, self.font.descender, self.font.ascender-self.font.descender, self.font.ascender-self.font.descender);
-                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:AttachmentCharacterString attributes:@{NSAttachmentAttributeName:att, AttachmentTagAttributeName:sub}];
-                    [str appendAttributedString:atts];
-                    index+=4;
-                }else
-                {
-                    ++index;
-                }
-            }else
-            {
-                [str replaceCharactersInRange:NSMakeRange(str.length, 0) withString:[string substringFromIndex:index]];
-                break;
-            }
-        }else
-        {
-            [str replaceCharactersInRange:NSMakeRange(str.length, 0) withString:ch];
-            ++index;
-        }
-    }
-    [str addAttribute:NSForegroundColorAttributeName value:self.textColor range:NSMakeRange(0, str.length)];
-    [str addAttribute:NSBackgroundColorAttributeName value:self.backgroundColor range:NSMakeRange(0, str.length)];
-    [str addAttribute:NSFontAttributeName value:self.font range:NSMakeRange(0, str.length)];
-    
-    return str;
-}
-
 - (UIColor*)textColor
 {
     return _textColor;
@@ -147,28 +105,4 @@
     
 }
 
-/*
- - (float)heightWithWidth:(float)width font:(UIFont*)font
- {
- NSMutableAttributedString *att=[[NSMutableAttributedString alloc] initWithAttributedString:self];
- [att enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, self.length) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
- if (value)
- {
- [value setBounds:CGRectMake(0, 0, font.pointSize, font.pointSize)];
- }
- }];
- [att removeAttribute:NSFontAttributeName range:NSMakeRange(0, att.length)];
- [att addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, att.length)];
- CGRect rect = [att boundingRectWithSize:CGSizeMake(width, HUGE_VALF) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
- return rect.size.height;
- }
-
- */
-/*
-- (void)copy:(nullable id)sender {
-    NSRange range = self.selectedRange;
-    NSString *s = [self encodedStringInRange:range];
-    [UIPasteboard generalPasteboard].string = s;
-}
-*/
 @end

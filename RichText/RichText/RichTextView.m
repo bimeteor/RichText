@@ -21,16 +21,12 @@
     if (self)
     {
         self.textStorage.delegate=self;
+        _richSymbols=__pics;
     }
     return self;
 }
 
-- (void)copy:(nullable id)sender
-{
-    [UIPasteboard generalPasteboard].string = [self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:self.selectedRange]];
-}
-
-- (void)cut:(nullable id)sender
+- (void)cut:(id)sender
 {
     [UIPasteboard generalPasteboard].string = [self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:self.selectedRange]];
     [super cut:sender];
@@ -59,49 +55,6 @@
         [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(NSMaxRange(self.selectedRange), self.textStorage.length-self.selectedRange.location)]]];
     }
     [self.textStorage replaceCharactersInRange:NSMakeRange(left, right-left) withAttributedString:[self attributedStringFromString:str]];
-}
-
-- (NSAttributedString*)attributedStringFromString:(NSString*)string
-{
-    NSMutableAttributedString *str = [NSMutableAttributedString new];
-    long index = 0;
-    NSString *ch;
-    while (index<string.length)
-    {
-        ch=[string substringWithRange:NSMakeRange(index, 1)];
-        if ([ch isEqualToString:@"/"])
-        {
-            if (index+3<string.length)
-            {
-                NSString *sub=[string substringWithRange:NSMakeRange(index+1, 3)];
-                if ([__pics containsObject:sub])
-                {
-                    NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
-                    att.image=[UIImage imageNamed:sub];
-                    att.bounds=CGRectMake(0, self.font.descender, self.font.ascender-self.font.descender, self.font.ascender-self.font.descender);
-                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:AttachmentCharacterString attributes:@{NSAttachmentAttributeName:att, AttachmentTagAttributeName:sub}];
-                    [str appendAttributedString:atts];
-                    index+=4;
-                }else
-                {
-                    ++index;
-                }
-            }else
-            {
-                [str replaceCharactersInRange:NSMakeRange(str.length, 0) withString:[string substringFromIndex:index]];
-                break;
-            }
-        }else
-        {
-            [str replaceCharactersInRange:NSMakeRange(str.length, 0) withString:ch];
-            ++index;
-        }
-    }
-    [str addAttribute:NSForegroundColorAttributeName value:self.textColor range:NSMakeRange(0, str.length)];
-    [str addAttribute:NSBackgroundColorAttributeName value:self.backgroundColor range:NSMakeRange(0, str.length)];
-    [str addAttribute:NSFontAttributeName value:self.font range:NSMakeRange(0, str.length)];
-    
-    return str;
 }
 
 - (void)textStorage:(NSTextStorage *)textStorage willProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta

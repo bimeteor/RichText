@@ -14,8 +14,16 @@ extern NSString *AttachmentCharacterString;
 extern NSString *AttachmentTagAttributeName;
 
 @interface RichTextViewBase : UITextView
+{
+    NSSet *_richSymbols;
+}
 
 - (NSString*)stringFromAttributedString:(NSAttributedString*)attributedString;
 - (NSAttributedString*)attributedStringFromString:(NSString*)string;
+
+@end
+
+
+@interface NSAttributedString(Height)
 
 @end
