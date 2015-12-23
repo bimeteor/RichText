@@ -85,7 +85,6 @@ NSString *AttachmentCharacterString;
                 if ([_richSymbols containsObject:sub])
                 {
                     NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
-                    att.image=[UIImage imageNamed:sub];
                     att.bounds=CGRectMake(0, self.font.descender, self.font.ascender-self.font.descender, self.font.ascender-self.font.descender);
                     NSAttributedString *atts=[[NSAttributedString alloc] initWithString:AttachmentCharacterString attributes:@{NSAttachmentAttributeName:att, AttachmentTagAttributeName:sub}];
                     [str appendAttributedString:atts];

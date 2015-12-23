@@ -38,12 +38,10 @@
     NSAttributedString *str=[self attributedStringFromString:text];
     [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:str];
     [_GIFViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    long index=0;
-    NSAttributedString *ch;
-    while (index<self.textStorage.length)
+
+    for (long index=0; index<self.textStorage.length; ++index)
     {
-        ch=[self.textStorage attributedSubstringFromRange:NSMakeRange(index, 1)];
+        NSAttributedString *ch=[self.textStorage attributedSubstringFromRange:NSMakeRange(index, 1)];
         NSString *tag=[ch attribute:AttachmentTagAttributeName atIndex:0 effectiveRange:NULL];
         if ([ch.string isEqualToString:AttachmentCharacterString] && tag)
         {
@@ -74,7 +72,6 @@
             view.GIFData=data;
             [view startAnimation];
         }
-        ++index;
     }
 }
 
