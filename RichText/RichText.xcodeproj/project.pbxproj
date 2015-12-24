@@ -43,6 +43,8 @@
 		4B842C211BF1E33800CB2615 /* 010@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B842C171BF1E33800CB2615 /* 010@2x.png */; };
 		4BB109121BF43E0B00759F00 /* PathDrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB109111BF43E0B00759F00 /* PathDrawingView.m */; };
 		4BC4074F1C2A9A8800DF7B18 /* CircleContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4074E1C2A9A8800DF7B18 /* CircleContainer.m */; };
+		4BC407521C2B9CA600DF7B18 /* LabelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC407511C2B9CA600DF7B18 /* LabelController.m */; };
+		4BC407551C2B9CBA00DF7B18 /* PathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC407541C2B9CBA00DF7B18 /* PathController.m */; };
 		4BF1D5F71C18479F0023D42D /* RichTextViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF1D5F61C18479F0023D42D /* RichTextViewBase.m */; };
 		D6CE6B5D1C02038E005DB3A7 /* RichLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CE6B5C1C02038E005DB3A7 /* RichLabel.m */; };
 /* End PBXBuildFile section */
@@ -93,6 +95,10 @@
 		4BB109111BF43E0B00759F00 /* PathDrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathDrawingView.m; sourceTree = "<group>"; };
 		4BC4074D1C2A9A8800DF7B18 /* CircleContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleContainer.h; sourceTree = "<group>"; };
 		4BC4074E1C2A9A8800DF7B18 /* CircleContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleContainer.m; sourceTree = "<group>"; };
+		4BC407501C2B9CA600DF7B18 /* LabelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelController.h; sourceTree = "<group>"; };
+		4BC407511C2B9CA600DF7B18 /* LabelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelController.m; sourceTree = "<group>"; };
+		4BC407531C2B9CBA00DF7B18 /* PathController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathController.h; sourceTree = "<group>"; };
+		4BC407541C2B9CBA00DF7B18 /* PathController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathController.m; sourceTree = "<group>"; };
 		4BF1D5F51C18479F0023D42D /* RichTextViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextViewBase.h; sourceTree = "<group>"; };
 		4BF1D5F61C18479F0023D42D /* RichTextViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextViewBase.m; sourceTree = "<group>"; };
 		D6CE6B5B1C02038E005DB3A7 /* RichLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichLabel.h; sourceTree = "<group>"; };
@@ -141,6 +147,10 @@
 				4BB109111BF43E0B00759F00 /* PathDrawingView.m */,
 				4B6591031BF03D7000D9BD64 /* ViewController.h */,
 				4B6591041BF03D7000D9BD64 /* ViewController.m */,
+				4BC407501C2B9CA600DF7B18 /* LabelController.h */,
+				4BC407511C2B9CA600DF7B18 /* LabelController.m */,
+				4BC407531C2B9CBA00DF7B18 /* PathController.h */,
+				4BC407541C2B9CBA00DF7B18 /* PathController.m */,
 				4BC4074D1C2A9A8800DF7B18 /* CircleContainer.h */,
 				4BC4074E1C2A9A8800DF7B18 /* CircleContainer.m */,
 				4BF1D5F51C18479F0023D42D /* RichTextViewBase.h */,
@@ -309,8 +319,10 @@
 				4BC4074F1C2A9A8800DF7B18 /* CircleContainer.m in Sources */,
 				D6CE6B5D1C02038E005DB3A7 /* RichLabel.m in Sources */,
 				4BB109121BF43E0B00759F00 /* PathDrawingView.m in Sources */,
+				4BC407551C2B9CBA00DF7B18 /* PathController.m in Sources */,
 				4B6591501BF0BAE100D9BD64 /* GIFView.m in Sources */,
 				4B1C928C1BF2DAB300A20ECB /* RichTextView.m in Sources */,
+				4BC407521C2B9CA600DF7B18 /* LabelController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

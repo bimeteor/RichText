@@ -72,32 +72,7 @@
 - (void)cut:(id)sender
 {
     [UIPasteboard generalPasteboard].string = [self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:self.selectedRange]];
-    [super cut:sender];
-}
-
-- (void)paste:(id)sender
-{
-    NSMutableString *str=[NSMutableString new];
-    long left=0;
-    long right=self.textStorage.length;
-    if (self.selectedRange.location>3)
-    {
-        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(self.selectedRange.location-3, 3)]]];
-        left=self.selectedRange.location-3;
-    }else if (self.selectedRange.location>0)
-    {
-        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(0, self.selectedRange.location)]]];
-    }
-    [str appendString:[UIPasteboard generalPasteboard].string];
-    if (NSMaxRange(self.selectedRange)<self.textStorage.length-3)
-    {
-        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(NSMaxRange(self.selectedRange), 3)]]];
-        right=NSMaxRange(self.selectedRange)+3;
-    }else
-    {
-        [str appendString:[self stringFromAttributedString:[self.textStorage attributedSubstringFromRange:NSMakeRange(NSMaxRange(self.selectedRange), self.textStorage.length-self.selectedRange.location)]]];
-    }
-    [self.textStorage replaceCharactersInRange:NSMakeRange(left, right-left) withAttributedString:[self attributedStringFromString:str]];
+    [self.textStorage replaceCharactersInRange:self.selectedRange withString:@""];
 }
 
 - (void)textStorage:(NSTextStorage *)textStorage willProcessEditing:(NSTextStorageEditActions)editedMask range:(NSRange)editedRange changeInLength:(NSInteger)delta

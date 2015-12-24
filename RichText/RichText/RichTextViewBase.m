@@ -51,11 +51,9 @@ NSString *AttachmentCharacterString;
 - (NSString*)stringFromAttributedString:(NSAttributedString*)attributedString
 {
     NSMutableString *str=[NSMutableString new];
-    long index=0;
-    NSAttributedString *ch;
-    while (index<attributedString.length)
+    for (long index=0; index<attributedString.length; ++index)
     {
-        ch=[attributedString attributedSubstringFromRange:NSMakeRange(index, 1)];
+        NSAttributedString *ch=[attributedString attributedSubstringFromRange:NSMakeRange(index, 1)];
         NSString *tag=[ch attribute:AttachmentTagAttributeName atIndex:0 effectiveRange:NULL];
         if ([ch.string isEqualToString:AttachmentCharacterString] && tag)
         {
@@ -64,7 +62,6 @@ NSString *AttachmentCharacterString;
         {
             [str appendString:ch.string];
         }
-        ++index;
     }
     return str;
 }
@@ -123,7 +120,7 @@ NSString *AttachmentCharacterString;
 
 - (void)setText:(NSString *)text
 {
-    [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withAttributedString:[[NSAttributedString alloc] initWithString:text]];
+    [self.textStorage replaceCharactersInRange:NSMakeRange(0, self.textStorage.length) withString:text];
 }
 
 - (void)setTextColor:(UIColor *)textColor
@@ -151,8 +148,7 @@ NSString *AttachmentCharacterString;
     [self.textStorage removeAttribute:NSFontAttributeName range:NSMakeRange(0, self.textStorage.length)];
     [self.textStorage addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, self.textStorage.length)];
     
-    long index=0;
-    while (index<self.textStorage.length)
+    for (long index=0; index<self.textStorage.length; ++index)
     {
         NSAttributedString *ch=[self.textStorage attributedSubstringFromRange:NSMakeRange(index, 1)];
         if ([ch.string isEqualToString:AttachmentCharacterString])
@@ -160,7 +156,6 @@ NSString *AttachmentCharacterString;
             NSTextAttachment *att=[ch attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
             att.bounds=CGRectMake(0, font.descender, font.ascender-font.descender, font.ascender-font.descender);
         }
-        ++index;
     }
     [self.textStorage endEditing];
 }
@@ -179,8 +174,8 @@ NSString *AttachmentCharacterString;
     NSMutableAttributedString *att=[[NSMutableAttributedString alloc] initWithAttributedString:self];
     [att removeAttribute:NSFontAttributeName range:NSMakeRange(0, att.length)];
     [att addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, att.length)];
-    long index=0;
-    while (index<att.length)
+    
+    for (long index=0; index<att.length; ++index)
     {
         NSAttributedString *ch=[att attributedSubstringFromRange:NSMakeRange(index, 1)];
         if ([ch.string isEqualToString:AttachmentCharacterString])
@@ -188,7 +183,6 @@ NSString *AttachmentCharacterString;
             NSTextAttachment *att=[ch attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
             att.bounds=CGRectMake(0, font.descender, font.ascender-font.descender, font.ascender-font.descender);
         }
-        ++index;
     }
     
     CGRect rect = [att boundingRectWithSize:CGSizeMake(width, HUGE_VALF) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading context:nil];
