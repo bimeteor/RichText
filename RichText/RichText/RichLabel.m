@@ -62,15 +62,52 @@ static NSMutableArray *__GIFViews;
 {
     return _font;
 }
-
+- (NSAttributedString*)attributedStringFromString:(NSString*)string
+{
+    NSMutableAttributedString *str = [NSMutableAttributedString new];
+    long index = 0;
+    NSString *ch;
+    while (index<string.length)
+    {
+        ch=[string substringWithRange:NSMakeRange(index, 1)];
+        if ([ch isEqualToString:@"/"])
+        {
+            if (index+3<string.length)
+            {
+                NSString *sub=[string substringWithRange:NSMakeRange(index+1, 3)];
+                if ([_richSymbols containsObject:sub])
+                {
+                    NSTextAttachment *att=[[NSTextAttachment alloc] initWithData:nil ofType:nil];
+                    att.bounds=CGRectMake(0, self.font.descender, self.font.ascender-self.font.descender, self.font.ascender-self.font.descender);
+                    NSAttributedString *atts=[[NSAttributedString alloc] initWithString:AttachmentCharacterString attributes:@{NSAttachmentAttributeName:att, AttachmentTagAttributeName:sub}];
+                    [str appendAttributedString:atts];
+                    index+=4;
+                }else
+                {
+                    ++index;
+                }
+            }else
+            {
+                [str replaceCharactersInRange:NSMakeRange(str.length, 0) withString:[string substringFromIndex:index]];
+                break;
+            }
+        }else
+        {
+            [str replaceCharactersInRange:NSMakeRange(str.length, 0) withString:ch];
+            ++index;
+        }
+    }
+    [str addAttribute:NSForegroundColorAttributeName value:self.textColor range:NSMakeRange(0, str.length)];
+    [str addAttribute:NSBackgroundColorAttributeName value:self.backgroundColor range:NSMakeRange(0, str.length)];
+    [str addAttribute:NSFontAttributeName value:self.font range:NSMakeRange(0, str.length)];
+    
+    return str;
+}
 - (void)setFont:(UIFont *)font
 {
     _font=font;
-    [self.textStorage beginEditing];
-    [self.textStorage removeAttribute:NSFontAttributeName range:NSMakeRange(0, self.textStorage.length)];
-    [self.textStorage addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, self.textStorage.length)];
+    super.font=font;
     [self refreshGIFs];
-    [self.textStorage endEditing];
 }
 
 - (void)setEditable:(BOOL)editable

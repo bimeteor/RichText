@@ -16,10 +16,11 @@ static NSString *plain = @"你们还/002好吗啊史/021khb我是frank/014hbjk�
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    RichLabel *view = [[RichLabel alloc] initWithFrame:CGRectMake(20, 90, 200, 80)];
+    RichLabel *view = [[RichLabel alloc] initWithFrame:CGRectMake(20, 90, 260, 260)];
     [self.view addSubview:view];
     view.backgroundColor = [UIColor yellowColor];
     view.text=plain;
+    view.font=[UIFont systemFontOfSize:30];
     view.tag=1;
 }
 

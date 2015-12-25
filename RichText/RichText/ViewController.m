@@ -20,7 +20,7 @@ static NSString *plain = @"g/001j/009a你还好台球f/004asdfg/001j/009a你还�
 {
     [super viewDidLoad];
 
-    RichTextView *view = [[RichTextView alloc] initWithFrame:CGRectMake(20, 90, 200, 80)];
+    RichTextView *view = [[RichTextView alloc] initWithFrame:CGRectMake(20, 90, 260, 260)];
     [self.view addSubview:view];
     view.backgroundColor = [UIColor yellowColor];
     view.text=plain;

@@ -19,6 +19,7 @@
 {
     [[UIColor blueColor] setFill];
     [[UIBezierPath bezierPathWithOvalInRect:self.bounds] fill];
+    [@"Drag me!" drawAtPoint:CGPointMake(self.bounds.size.width/2-35, self.bounds.size.height/2-12) withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 @end
