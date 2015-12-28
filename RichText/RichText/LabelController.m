@@ -9,18 +9,18 @@
 #import "LabelController.h"
 #import "RichLabel.h"
 #import "GIFView.h"
-static NSString *plain = @"你们还/002好吗啊史/021khb我是frank/014hbjk好想你们啊/044一起吃饭吧/006/099jkhbjkh大家觉得怎么样";
+static NSString *plain = @"你们还/002好吗啊/021我是frank/014好想你们啊/044一起吃饭吧/006/099大家觉得怎么样";
 
 @implementation LabelController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    RichLabel *view = [[RichLabel alloc] initWithFrame:CGRectMake(20, 90, 260, 260)];
+    RichLabel *view = [[RichLabel alloc] initWithFrame:CGRectMake(20, 90, 200, 260)];
     [self.view addSubview:view];
     view.backgroundColor = [UIColor yellowColor];
     view.text=plain;
-    view.font=[UIFont systemFontOfSize:30];
+    //view.font=[UIFont systemFontOfSize:30];
     view.tag=1;
 }
 

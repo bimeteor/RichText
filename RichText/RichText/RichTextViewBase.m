@@ -24,16 +24,11 @@ NSString *AttachmentCharacterString;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    NSLayoutManager *layout = [NSLayoutManager new];
-    NSTextStorage *store=[NSTextStorage new];
-    [store addLayoutManager:layout];
-    NSTextContainer *con = [NSTextContainer new];
-    con.widthTracksTextView = YES;
-    [layout addTextContainer:con];
-    self = [super initWithFrame:frame textContainer:con];
+    self = [super initWithFrame:frame];
     if (self)
     {
         super.textContainerInset = UIEdgeInsetsZero;
+        self.textContainer.widthTracksTextView = YES;
         self.textContainer.lineFragmentPadding = 0;
         super.font=[UIFont systemFontOfSize:17];
         super.textColor=[UIColor blackColor];

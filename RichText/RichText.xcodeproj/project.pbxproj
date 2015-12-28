@@ -45,6 +45,8 @@
 		4BC4074F1C2A9A8800DF7B18 /* CircleContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4074E1C2A9A8800DF7B18 /* CircleContainer.m */; };
 		4BC407521C2B9CA600DF7B18 /* LabelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC407511C2B9CA600DF7B18 /* LabelController.m */; };
 		4BC407551C2B9CBA00DF7B18 /* PathController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC407541C2B9CBA00DF7B18 /* PathController.m */; };
+		4BC4075C1C2CF3B300DF7B18 /* 11.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 4BC4075A1C2CF3B300DF7B18 /* 11.jpeg */; };
+		4BC4075D1C2CF3B300DF7B18 /* 22.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC4075B1C2CF3B300DF7B18 /* 22.png */; };
 		4BF1D5F71C18479F0023D42D /* RichTextViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF1D5F61C18479F0023D42D /* RichTextViewBase.m */; };
 		D6CE6B5D1C02038E005DB3A7 /* RichLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CE6B5C1C02038E005DB3A7 /* RichLabel.m */; };
 /* End PBXBuildFile section */
@@ -99,6 +101,8 @@
 		4BC407511C2B9CA600DF7B18 /* LabelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelController.m; sourceTree = "<group>"; };
 		4BC407531C2B9CBA00DF7B18 /* PathController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathController.h; sourceTree = "<group>"; };
 		4BC407541C2B9CBA00DF7B18 /* PathController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathController.m; sourceTree = "<group>"; };
+		4BC4075A1C2CF3B300DF7B18 /* 11.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 11.jpeg; sourceTree = "<group>"; };
+		4BC4075B1C2CF3B300DF7B18 /* 22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 22.png; sourceTree = "<group>"; };
 		4BF1D5F51C18479F0023D42D /* RichTextViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichTextViewBase.h; sourceTree = "<group>"; };
 		4BF1D5F61C18479F0023D42D /* RichTextViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RichTextViewBase.m; sourceTree = "<group>"; };
 		D6CE6B5B1C02038E005DB3A7 /* RichLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichLabel.h; sourceTree = "<group>"; };
@@ -211,6 +215,8 @@
 				4B842C151BF1E33800CB2615 /* 008@2x.png */,
 				4B842C161BF1E33800CB2615 /* 009@2x.png */,
 				4B842C171BF1E33800CB2615 /* 010@2x.png */,
+				4BC4075A1C2CF3B300DF7B18 /* 11.jpeg */,
+				4BC4075B1C2CF3B300DF7B18 /* 22.png */,
 			);
 			path = face;
 			sourceTree = "<group>";
@@ -291,12 +297,14 @@
 				4B6591491BF08D7300D9BD64 /* 098@2x.gif in Resources */,
 				4B6591411BF08D7300D9BD64 /* 014@2x.gif in Resources */,
 				4B842C1F1BF1E33800CB2615 /* 008@2x.png in Resources */,
+				4BC4075C1C2CF3B300DF7B18 /* 11.jpeg in Resources */,
 				4B65913E1BF08D7300D9BD64 /* 006@2x.gif in Resources */,
 				4B842C191BF1E33800CB2615 /* 002@2x.png in Resources */,
 				4B6591421BF08D7300D9BD64 /* 019@2x.gif in Resources */,
 				4B65913D1BF08D7300D9BD64 /* 005@2x.gif in Resources */,
 				4B65914A1BF08D7300D9BD64 /* 099@2x.gif in Resources */,
 				4B6591471BF08D7300D9BD64 /* 044@2x.gif in Resources */,
+				4BC4075D1C2CF3B300DF7B18 /* 22.png in Resources */,
 				4B65913C1BF08D7300D9BD64 /* 002@2x.gif in Resources */,
 				4B842C1D1BF1E33800CB2615 /* 006@2x.png in Resources */,
 				4B842C1A1BF1E33800CB2615 /* 003@2x.png in Resources */,
